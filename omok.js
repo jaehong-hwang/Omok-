@@ -6,7 +6,7 @@ $(function() {
 	function set_info()
 	{
 		var $figures = $('.omok-stone-figure');
-		$('.layer-omok-info').removeClass('ohd');
+		$('.layer-omok-modal').removeClass('ohd');
 		$figures.on('click', function(e) {
 			if(this.className.indexOf('omok-stone-selected') > -1) return;
 			$figures.toggleClass('omok-stone-selected');

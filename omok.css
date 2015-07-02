@@ -17,12 +17,12 @@ html .ohd {
 	opacity: 0;
 }
 
-html, body, .layer-omok-info {
+html, body, .layer-omok-modal {
 	width: 100%;
 	height: 100%;
 }
 
-.layer-omok-info {
+.layer-omok-modal {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -31,7 +31,7 @@ html, body, .layer-omok-info {
 	transition: .2s;
 }
 
-.omok-info {
+.omok-modal {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -42,6 +42,23 @@ html, body, .layer-omok-info {
 	background: #fff;
 	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	text-align: center;
+	-webkit-animation: modal_animate 1.5s;
+	animation: modal_animate 1.5s;
+	overflow: hidden;
+}
+
+@-webkit-keyframes modal_animate {
+	0% { width: 0px; height: 1px; }
+	30% { width: 0px; height: 1px; }
+	55% { width: 500px; height: 1px; }
+	100% { width: 500px; height: 400px; }
+}
+
+@keyframes modal_animate {
+	0% { width: 0px; height: 1px; }
+	30% { width: 0px; height: 1px; }
+	55% { width: 500px; height: 1px; }
+	100% { width: 500px; height: 400px; }
 }
 
 .omok-title {
@@ -68,11 +85,20 @@ html, body, .layer-omok-info {
 	height: 100%;
 	border: 1px solid #ccc;
 	border-radius: 7px;
-	transition: .3s;
 }
 
 .omok-stone-selected {
-	background: #ccc;
+	background: #e5e5e5;
+	-webkit-animation: stone_animation .5s;
+	animation: stone_animation .5s;
+}
+
+@-webkit-keyframes stone_animation {
+	from { background: #ddd; }
+}
+
+@keyframes stone_animation {
+	from { background: #ddd; }
 }
 
 .omok-stone-selected .omok-stone {
