@@ -22,11 +22,16 @@ html, body, .layer-omok-modal {
 	height: 100%;
 }
 
+body {
+	background-image: url('../images/background.png');
+	background-position: 50% 50%;
+}
+
 .layer-omok-modal {
 	position: absolute;
 	left: 0;
 	top: 0;
-	background: rgba(0,0,0,0.1);
+	background: rgba(0,0,0,0.6);
 	opacity: 1;
 	transition: .2s;
 }
@@ -39,7 +44,6 @@ html, body, .layer-omok-modal {
 	width: 500px;
 	height: 400px;
 	border-radius: 2px;
-	background: #fff;
 	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	text-align: center;
 	-webkit-animation: modal_animate 1.5s;
@@ -61,12 +65,17 @@ html, body, .layer-omok-modal {
 	100% { width: 500px; height: 400px; }
 }
 
-.omok-title {
+.omok-modal-title {
 	padding-top: 15px;
 	height: 100px;
 	background: #333;
 	color: #fff;
 	font-size: 3rem;
+}
+
+.omok-modal-content {
+	height: 300px;
+	background: #fff;
 }
 
 .omok-stone-list {
@@ -84,31 +93,21 @@ html, body, .layer-omok-modal {
 	width: 47%;
 	height: 100%;
 	border: 1px solid #ccc;
-	border-radius: 7px;
 }
 
 .omok-stone-selected {
-	background: #e5e5e5;
+	background: #34495e;
+	border: 1px solid #24394e;
 	-webkit-animation: stone_animation .5s;
 	animation: stone_animation .5s;
 }
 
 @-webkit-keyframes stone_animation {
-	from { background: #ddd; }
+	from { background: #101d2a; }
 }
 
 @keyframes stone_animation {
-	from { background: #ddd; }
-}
-
-.omok-stone-selected .omok-stone {
-	opacity: 0.9;
-}
-
-.omok-stone-text {
-	font-size: 1.4rem;
-	font-weight: bold;
-	color: #444;
+	from { background: #101d2a; }
 }
 
 .omok-stone div {
@@ -116,7 +115,7 @@ html, body, .layer-omok-modal {
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
-	border: 1px solid #ccc;
+	border: 7px solid #000;
 }
 
 .stone-black {
@@ -124,7 +123,25 @@ html, body, .layer-omok-modal {
 }
 
 .stone-white {
+	background: transparent;
+}
+
+.omok-stone-selected .omok-stone div {
+	border-color: #fff;
+}
+
+.omok-stone-selected .stone-black {
 	background: #fff;
+}
+
+.omok-stone-selected .omok-stone-text {
+	color: #fff;
+}
+
+.omok-stone-text {
+	font-size: 1.4rem;
+	font-weight: bold;
+	color: #444;
 }
 
 .omok-start {

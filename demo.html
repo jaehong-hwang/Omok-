@@ -3,41 +3,43 @@
 	<head>
     	<meta charset="utf-8">
         <title>Omok! - Play the game</title>
-        <script src="./jquery-1.11.3.min.js"></script>
-        <script src="./omok.js"></script>
-        <link rel="stylesheet" href="./omok.css">
+        <script src="./js/jquery-1.11.3.min.js"></script>
+        <script src="./js/omok.js"></script>
+        <link rel="stylesheet" href="./css/omok.css">
     </head>
     <body>
     	<div class="layer-omok-modal ohd">
             <div class="omok-modal">
-                <h1 class="omok-title">
+                <h1 class="omok-modal-title">
                 	Omok!
                 </h1>
-                <ul class="omok-stone-list">
-                	<li class="omok-stone-figure omok-stone-selected">
-                        <input type="radio" name="omok-color" value="black" id="black-stone" class="hd" checked="checked">
-                        <label for="black-stone">
-                            <figure class="omok-stone">
-                                <div class="stone-black"></div>
-                                <figcaption class="omok-stone-text">
-                                    선공
-                                </figcaption>
-                            </figure>
-                        </label>
-                	</li>
-                    <li class="omok-stone-figure">
-                        <input type="radio" name="omok-color" value="white" id="white-stone" class="hd">
-                        <label for="white-stone">
-                            <figure class="omok-stone">
-                                <div class="stone-white"></div>
-                                <figcaption class="omok-stone-text">
-                                    후공
-                                </figcaption>
-                            </figure>
-                        </label>
-                	</li>
-                </ul>
-                <input type="button" value="게임 시작" class="omok-start">
+                <div class="omok-modal-content">
+                    <ul class="omok-stone-list">
+                    	<li class="omok-stone-figure omok-stone-selected">
+                            <input type="radio" name="omok-color" value="black" id="black-stone" class="hd" checked="checked">
+                            <label for="black-stone">
+                                <figure class="omok-stone">
+                                    <div class="stone-black"></div>
+                                    <figcaption class="omok-stone-text">
+                                        선공
+                                    </figcaption>
+                                </figure>
+                            </label>
+                    	</li>
+                        <li class="omok-stone-figure">
+                            <input type="radio" name="omok-color" value="white" id="white-stone" class="hd">
+                            <label for="white-stone">
+                                <figure class="omok-stone">
+                                    <div class="stone-white"></div>
+                                    <figcaption class="omok-stone-text">
+                                        후공
+                                    </figcaption>
+                                </figure>
+                            </label>
+                    	</li>
+                    </ul>
+                    <input type="button" value="게임 시작" class="omok-start">
+                </div>
             </div>
         </div>
     </body>
