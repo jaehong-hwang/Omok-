@@ -31,38 +31,65 @@ body {
 	position: absolute;
 	left: 0;
 	top: 0;
-	background: rgba(0,0,0,0.6);
 	opacity: 1;
 	transition: .2s;
 }
 
-.omok-modal {
+.layer-omok-playing {
+	background: rgba(0,0,0,0.6);
+}
+
+.omok-modal-info {
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	width: 500px;
-	height: 400px;
 	border-radius: 2px;
 	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	text-align: center;
-	-webkit-animation: modal_animate 1.5s;
-	animation: modal_animate 1.5s;
 	overflow: hidden;
 }
 
-@-webkit-keyframes modal_animate {
+.omok-modal-info-open {
+	width: 500px;
+	height: 400px;
+	-webkit-animation: modal_open_animate 1.5s;
+	animation: modal_open_animate 1.5s;
+}
+
+.omok-modal-info-close {
+	width: 0;
+	height: 0;
+	-webkit-animation: modal_close_animate 1.5s;
+	animation: modal_close_animate 1.5s;
+}
+
+@-webkit-keyframes modal_open_animate {
 	0% { width: 0px; height: 1px; }
 	30% { width: 0px; height: 1px; }
 	55% { width: 500px; height: 1px; }
 	100% { width: 500px; height: 400px; }
 }
 
-@keyframes modal_animate {
+@keyframes modal_open_animate {
 	0% { width: 0px; height: 1px; }
 	30% { width: 0px; height: 1px; }
 	55% { width: 500px; height: 1px; }
 	100% { width: 500px; height: 400px; }
+}
+
+@-webkit-keyframes modal_close_animate {
+	0% { width: 500px; height: 400px; }
+	45% { width: 500px; height: 1px; }
+	70% { width: 0px; height: 1px; }
+	100% { width: 0px; height: 1px; }
+}
+
+@keyframes modal_close_animate {
+	0% { width: 500px; height: 400px; }
+	45% { width: 500px; height: 1px; }
+	70% { width: 0px; height: 1px; }
+	100% { width: 0px; height: 1px; }
 }
 
 .omok-modal-title {
