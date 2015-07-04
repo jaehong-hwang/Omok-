@@ -39,11 +39,14 @@ body {
 	background: rgba(0,0,0,0.6);
 }
 
-.omok-modal-info {
+.layer-modals {
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.omok-modal-info {
 	border-radius: 2px;
 	box-shadow: 0 0 10px rgba(0,0,0,0.3);
 	text-align: center;
@@ -53,39 +56,39 @@ body {
 .omok-modal-info-open {
 	width: 500px;
 	height: 400px;
-	-webkit-animation: modal_open_animate 1.5s;
-	animation: modal_open_animate 1.5s;
+	-webkit-animation: info_open_animate 1.5s;
+	animation: info_open_animate 1.5s;
 }
 
 .omok-modal-info-close {
 	width: 0;
 	height: 0;
-	-webkit-animation: modal_close_animate 1.5s;
-	animation: modal_close_animate 1.5s;
+	-webkit-animation: info_close_animate 1.5s;
+	animation: info_close_animate 1.5s;
 }
 
-@-webkit-keyframes modal_open_animate {
+@-webkit-keyframes info_open_animate {
 	0% { width: 0px; height: 1px; }
 	30% { width: 0px; height: 1px; }
 	55% { width: 500px; height: 1px; }
 	100% { width: 500px; height: 400px; }
 }
 
-@keyframes modal_open_animate {
+@keyframes info_open_animate {
 	0% { width: 0px; height: 1px; }
 	30% { width: 0px; height: 1px; }
 	55% { width: 500px; height: 1px; }
 	100% { width: 500px; height: 400px; }
 }
 
-@-webkit-keyframes modal_close_animate {
+@-webkit-keyframes info_close_animate {
 	0% { width: 500px; height: 400px; }
 	45% { width: 500px; height: 1px; }
 	70% { width: 0px; height: 1px; }
 	100% { width: 0px; height: 1px; }
 }
 
-@keyframes modal_close_animate {
+@keyframes info_close_animate {
 	0% { width: 500px; height: 400px; }
 	45% { width: 500px; height: 1px; }
 	70% { width: 0px; height: 1px; }
@@ -185,4 +188,58 @@ body {
 .omok-start:hover {
 	background: #222;
 	color: #fff;
+}
+
+
+
+/* Omok Board Styling */
+
+.omok-modal-board {
+	border-radius: 2px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+	text-align: center;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	background: #fff;
+	display: flex;
+}
+
+.omok-modal-board-open {
+	width: 1000px;
+	height: 700px;
+	-webkit-animation: board_open_animate 1.5s;
+	animation: board_open_animate 1.5s;
+}
+
+@-webkit-keyframes board_open_animate {
+	0% { width: 1px; height: 1px; }
+	45% { width: 1px; height: 700px; }
+	100% { width: 1000px; height: 700px; }
+}
+
+@keyframes board_open_animate {
+	0% { width: 1px; height: 1px; }
+	45% { width: 1px; height: 700px; }
+	100% { width: 1000px; height: 700px; }
+}
+
+.omok-board-wrap {
+	transition: opacity .5s;
+}
+
+.omok-board {
+	width: 580px;
+	height: 580px;
+	border: 1px solid #888;
+	margin: 50px 0 0 50px;
+	cursor: pointer;
+}
+
+.omok-board-cells:not(:last-child) {
+	border-right: 1px solid #888;
+}
+
+.omok-board-info {
+	transition: opacity .5s;
 }
