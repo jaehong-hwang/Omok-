@@ -115,63 +115,27 @@ body {
 	height: 230px;
 }
 
-.omok-stone-figure, .omok-stone {
+.omok-stone-figure {
+	position: relative;
+}
+
+.omok-stone-image {
 	cursor: pointer;
 }
 
-.omok-stone-figure {
-	width: 47%;
-	height: 100%;
-	border: 1px solid #ccc;
+.omok-stone-image-on {
+	cursor: pointer;
+	position: absolute;
+	left: 0;
+	top: 0;
+	-webkit-clip-path: circle(0px at center);
+	clip-path: circle(0px at center);
+	transition: .3s;
 }
 
-.omok-stone-selected {
-	background: #34495e;
-	border: 1px solid #24394e;
-	-webkit-animation: stone_animation .5s;
-	animation: stone_animation .5s;
-}
-
-@-webkit-keyframes stone_animation {
-	from { background: #101d2a; }
-}
-
-@keyframes stone_animation {
-	from { background: #101d2a; }
-}
-
-.omok-stone div {
-	margin: 20px auto;
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
-	border: 7px solid #000;
-}
-
-.stone-black {
-	background: #000;
-}
-
-.stone-white {
-	background: transparent;
-}
-
-.omok-stone-selected .omok-stone div {
-	border-color: #fff;
-}
-
-.omok-stone-selected .stone-black {
-	background: #fff;
-}
-
-.omok-stone-selected .omok-stone-text {
-	color: #fff;
-}
-
-.omok-stone-text {
-	font-size: 1.4rem;
-	font-weight: bold;
-	color: #444;
+.omok-stone-selected .omok-stone-image-on {
+	-webkit-clip-path: circle(145px at center);
+	clip-path: circle(145px at center);
 }
 
 .omok-start {

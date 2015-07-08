@@ -27,6 +27,8 @@ $(function() {
 			'white' : []
 		};
 		
+		this.shadowVec = null;
+		
 		this.figures = $figures = $('.omok-stone-figure', this.info);
 		$figures.on('click', function(e) {
 			if(this.className.indexOf('omok-stone-selected') > -1) return;
@@ -79,9 +81,30 @@ $(function() {
 			this.stonesVec[color].push(vec);
 		},
 		
-		drawBoard : function()
+		drawStones : function(vec, color, stroke)
 		{
-			var i, j, f, vec, lw, self = this,
+			var lw;
+			
+			this.ctx.strokeStyle = stroke || '#888';
+			this.ctx.lineWidth = lw = this.cellWidth / 2.5 + 0.5;
+			
+			this.ctx.beginPath();
+			this.ctx.arc(vec[0]*this.cellWidth, vec[1]*this.cellHeight, lw / 2, 0, Math.PI*2, true);
+			this.ctx.closePath();
+			this.ctx.stroke();
+			
+			this.ctx.strokeStyle = color;
+			this.ctx.lineWidth = lw = this.cellWidth / 2.5;
+			
+			this.ctx.beginPath();
+			this.ctx.arc(vec[0]*this.cellWidth, vec[1]*this.cellHeight, lw / 2, 0, Math.PI*2, true);
+			this.ctx.closePath();
+			this.ctx.stroke();
+		},
+		
+		drawBoard : function(pc)
+		{
+			var i, j, f, vec, self = this,
 				a = [3,Math.floor(this.width/2),this.width-4];
 			
 			this.ctx.clearRect(0, 0, this.canvas[0].width, this.canvas[0].height); 
@@ -124,27 +147,17 @@ $(function() {
 				for(i=0,f=self.stonesVec[color].length;i<f;i++)
 				{
 					vec = self.stonesVec[color][i];
-					
-					self.ctx.strokeStyle = '#888';
-					self.ctx.lineWidth = lw = self.cellWidth / 2.5 + 1;
-					
-					self.ctx.beginPath();
-					self.ctx.arc(vec[0]*self.cellWidth, vec[1]*self.cellHeight, lw / 2, 0, Math.PI*2, true);
-					self.ctx.closePath();
-					self.ctx.stroke();
-					
-					self.ctx.strokeStyle = color;
-					self.ctx.lineWidth = lw = self.cellWidth / 2.5;
-					
-					self.ctx.beginPath();
-					self.ctx.arc(vec[0]*self.cellWidth, vec[1]*self.cellHeight, lw / 2, 0, Math.PI*2, true);
-					self.ctx.closePath();
-					self.ctx.stroke();
+					self.drawStones(vec, color);
 				}
 			});
 			
+			if(self.shadowVec !== null)
+			{
+				self.drawStones(self.shadowVec, 'rgba('+(pc === 'black' ? '0,0,0' : '255,255,255')+',0.3)', 'rgba(136,136,136,0.3)');
+			}
+			
 			window.requestAnimationFrame(function() {
-				self.drawBoard.call(self);
+				self.drawBoard.call(self, pc);
 			});
 		},
 		
@@ -185,14 +198,29 @@ $(function() {
 		{
 			var self = this, cell;
 			
-			this.canvas.on('click', function(e) {
-				cell = self.getCell(e.offsetX, e.offsetY);
+			this.canvas.on({
+				'click' : function(e) {
+					cell = self.getCell(e.offsetX, e.offsetY);
+					
+					if(cell[0] > 0 && cell[0] < self.width - 1 && self.isEmptyCell(cell))
+					{
+						self.canvas.off('click', 'mousemove');
+						self.attack(pc, cell);
+						self.gameAction(ac, pc, ac);
+					}
+				},
 				
-				if(cell[0] > 0 && cell[0] < self.width - 1 && self.isEmptyCell(cell))
-				{
-					self.canvas.off('click');
-					self.attack(pc, cell);
-					self.gameAction(ac, pc, ac);
+				'mousemove' : function(e) {
+					cell = self.getCell(e.offsetX, e.offsetY);
+					
+					if(cell[0] > 0 && cell[0] < self.width - 1 && self.isEmptyCell(cell))
+					{
+						self.shadowVec = cell;
+					}
+					else
+					{
+						self.shadowVec = null;
+					}
 				}
 			});
 		},
@@ -222,7 +250,7 @@ $(function() {
 				turn = playerColor === 'black' ? playerColor : aiColor;
 			
 			this.closeInfo();
-			this.drawBoard();
+			this.drawBoard(playerColor);
 			
 			setTimeout(function() {
 				self.openBoard();
