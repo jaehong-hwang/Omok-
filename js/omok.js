@@ -190,17 +190,16 @@ $(function() {
 				
 				if(cell[0] > 0 && cell[0] < self.width - 1 && self.isEmptyCell(cell))
 				{
-					console.log(1);
+					self.canvas.off('click');
 					self.attack(pc, cell);
+					self.gameAction(ac, pc, ac);
 				}
 			});
-			
-			this.gameAction(ac, pc, ac);
 		},
 		
 		aiTurn : function(pc, ac)
 		{
-			//this.gameAction(pc, pc, ac);
+			this.gameAction(pc, pc, ac);
 		},
 		
 		gameAction : function(turn, pc, ac)
