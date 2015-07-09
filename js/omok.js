@@ -202,7 +202,8 @@ $(function() {
 				'click' : function(e) {
 					cell = self.getCell(e.offsetX, e.offsetY);
 					
-					if(cell[0] > 0 && cell[0] < self.width - 1 && self.isEmptyCell(cell))
+					if(cell[0] > 0 && cell[0] < self.width - 1 &&
+						cell[1] > 0 && cell[1] < self.height - 1 && self.isEmptyCell(cell))
 					{
 						self.canvas.off('click', 'mousemove');
 						self.attack(pc, cell);
@@ -213,7 +214,8 @@ $(function() {
 				'mousemove' : function(e) {
 					cell = self.getCell(e.offsetX, e.offsetY);
 					
-					if(cell[0] > 0 && cell[0] < self.width - 1 && self.isEmptyCell(cell))
+					if(cell[0] > 0 && cell[0] < self.width - 1 &&
+						cell[1] > 0 && cell[1] < self.height - 1 && self.isEmptyCell(cell))
 					{
 						self.shadowVec = cell;
 					}
@@ -227,6 +229,14 @@ $(function() {
 		
 		aiTurn : function(pc, ac)
 		{
+			var cell;
+			
+			do {
+				cell = [Math.randomInt(1,this.width-1),Math.randomInt(1,this.height-1)];
+			} while(this.isEmptyCell(cell) === false);
+			
+			this.attack(ac, cell);
+			
 			this.gameAction(pc, pc, ac);
 		},
 		
