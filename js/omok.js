@@ -76,9 +76,10 @@ $(function() {
 			}, 1800);
 		},
 		
-		attack : function(color, vec)
+		attack : function(vecs, color, vec)
 		{
-			this.stonesVec[color].push(vec);
+			vecs[color].push(vec);
+			return vecs;
 		},
 		
 		drawStones : function(vec, color, stroke)
@@ -174,9 +175,9 @@ $(function() {
 			return v1[0] === v2[0] && v1[1] === v2[1];
 		},
 		
-		isEmptyCell : function(cell)
+		isEmptyCell : function(vecs, cell)
 		{
-			var self = this, vecs = this.stonesVec, vec, i, f, empty = true;
+			var self = this, vec, i, f, vecColor = '';
 			
 			['black', 'white'].forEach(function(color) {
 				vec = vecs[color];
@@ -185,37 +186,86 @@ $(function() {
 				{
 					if(self.isSameCell(vec[i], cell))
 					{
-						empty = false;
+						vecColor = color;
 						return;
 					}
 				}
 			});
 			
-			return empty;
+			return vecColor || true;
+		},
+		
+		getLine : function(vecs, color, x, y, sx, sy)
+		{
+			var line = [], vec = [x,y];
+			do {
+				line[line.length] = vec;
+				x += sx;
+				y += sy;
+				vec = [x,y];
+			} while(this.isEmptyCell(vecs, vec) === color);
+			
+			return line;
+		},
+		
+		getLines : function(color, vec)
+		{
+			/*
+			 *  오른쪽, 아래, 대각선 아래 검사
+			 *	만약 위에 돌이 있을경우 아래 검사안함, 이외에도 마찬가지
+			 */
+			
+			var lines = [], self = this, line;
+			vec[color].sort().forEach(function(v) {
+				if(self.isEmptyCell(vec, [v[0] - 1, v[1]]) !== color) {
+					line = self.getLine(vec, color, v[0], v[1], 1, 0);
+					if(line.length > 1) lines[lines.length] = line;
+				}
+				
+				if(self.isEmptyCell(vec, [v[0], v[1] - 1]) !== color) {
+					line = self.getLine(vec, color, v[0], v[1], 0, 1);
+					if(line.length > 1) lines[lines.length] = line;
+				}
+				
+				if(self.isEmptyCell(vec, [v[0] - 1, v[1] - 1]) !== color) {
+					line = self.getLine(vec, color, v[0], v[1], 1, 1);
+					if(line.length > 1) lines[lines.length] = line;
+				}
+			});
+			
+			return lines;
+		},
+		
+		getScore : function(color, vec)
+		{
+			var score = 0, lines = this.getLines(color, vec);
+			for(var i=0,f=lines.length;i<f;i++)
+			{
+				if(score < lines[i].length) score = lines[i].length;
+			}
+			return score;
 		},
 		
 		playerTurn : function(pc, ac)
 		{
 			var self = this, cell;
-			
 			this.canvas.on({
 				'click' : function(e) {
 					cell = self.getCell(e.offsetX, e.offsetY);
 					
 					if(cell[0] > 0 && cell[0] < self.width - 1 &&
-						cell[1] > 0 && cell[1] < self.height - 1 && self.isEmptyCell(cell))
+						cell[1] > 0 && cell[1] < self.height - 1 && self.isEmptyCell(self.stonesVec, cell) === true)
 					{
 						self.canvas.off('click', 'mousemove');
-						self.attack(pc, cell);
+						self.stonesVec = self.attack(self.stonesVec, pc, cell);
 						self.gameAction(ac, pc, ac);
 					}
 				},
 				
 				'mousemove' : function(e) {
 					cell = self.getCell(e.offsetX, e.offsetY);
-					
 					if(cell[0] > 0 && cell[0] < self.width - 1 &&
-						cell[1] > 0 && cell[1] < self.height - 1 && self.isEmptyCell(cell))
+						cell[1] > 0 && cell[1] < self.height - 1 && self.isEmptyCell(self.stonesVec, cell) === true)
 					{
 						self.shadowVec = cell;
 					}
@@ -227,16 +277,27 @@ $(function() {
 			});
 		},
 		
-		aiTurn : function(pc, ac)
+		getRandomEmptyCell : function(vecs, cells)
 		{
-			var cell;
+			var cell, i, f = cells.length, inCell = f > 0;
 			
 			do {
 				cell = [Math.randomInt(1,this.width-1),Math.randomInt(1,this.height-1)];
-			} while(this.isEmptyCell(cell) === false);
+				for(i=0;i<f;i++)
+				{
+					if(this.isSameCell(cell, cells[i]) === false)
+						inCell = false;
+				}
+			} while(this.isEmptyCell(vecs, cell) !== true || inCell === true);
 			
-			this.attack(ac, cell);
-			
+			return cell;
+		},
+		
+		aiTurn : function(pc, ac)
+		{
+			console.log(this.stonesVec);
+			var cells = [], tempVec = this.stonesVec.slice(0), cell = this.getRandomEmptyCell(tempVec, cells);
+			tempVec = this.attack(tempVec, ac, cell);
 			this.gameAction(pc, pc, ac);
 		},
 		
